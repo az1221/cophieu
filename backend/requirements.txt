@@ -1,0 +1,12 @@
+fastapi==0.100.0
+uvicorn==0.23.2
+httpx==0.24.1   # Thay requests bằng httpx (tương thích async)
+pandas==2.0.3
+celery==5.3.1
+redis==5.0.1
+flower==2.0.1
+sqlalchemy==2.0.19
+asyncpg==0.28.0
+psycopg2-binary==2.9.7  # Thêm để hỗ trợ PostgreSQL
+alembic==1.11.3  # Hỗ trợ database migrations
+python-dotenv==1.0.0  # Quản lý biến môi trường
