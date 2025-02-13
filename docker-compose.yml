@@ -51,14 +51,18 @@ services:
       - backend
       - redis
 
-  flower:
-    build: ./flower
+    flower:
+    build:
+      context: .
+      dockerfile: flower/Dockerfile
     container_name: flower
     restart: always
     depends_on:
-      - worker
+      - redis
     ports:
       - "5555:5555"
+    environment:
+      - CELERY_BROKER_URL=redis://redis:6379/0
 
 volumes:
   postgres_data:
