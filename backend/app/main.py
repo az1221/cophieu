@@ -2,6 +2,15 @@ from fastapi import FastAPI
 from database import engine, Base
 from routes import router
 from fastapi.middleware.cors import CORSMiddleware
+import subprocess
+import sys
+
+try:
+    import vnstock
+except ImportError:
+    print("vnstock chưa được cài đặt. Đang tiến hành cài đặt từ GitHub...")
+    subprocess.check_call([sys.executable, "-m", "pip", "install", "git+https://github.com/thinh-vu/vnstock.git"])
+    import vnstock  # Import lại sau khi cài đặt thành công
 
 # Khởi tạo database
 Base.metadata.create_all(bind=engine)
