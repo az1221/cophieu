@@ -3,8 +3,17 @@ from sqlalchemy.orm import Session
 from database import get_db
 from models import StockPrice, StockInfo
 from schemas import StockInfoResponse, StockPriceResponse
+import vnstock
+from fastapi import APIRouter
+from datetime import datetime, timedelta
+from .utils import save_json
 
 router = APIRouter()
+
+import vnstock
+from fastapi import APIRouter
+from datetime import datetime, timedelta
+from .utils import save_json
 
 @router.get("/stocks/{symbol}", response_model=StockInfoResponse)
 def get_stock(symbol: str, db: Session = Depends(get_db)):
