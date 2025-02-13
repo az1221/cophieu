@@ -7,13 +7,44 @@ import vnstock
 from fastapi import APIRouter
 from datetime import datetime, timedelta
 from .utils import save_json
+from typing import List
+import json
+import os
 
 router = APIRouter()
 
-import vnstock
-from fastapi import APIRouter
-from datetime import datetime, timedelta
-from .utils import save_json
+WATCHLIST_FILE = "data/watchlist.json"
+
+def load_watchlist():
+    if os.path.exists(WATCHLIST_FILE):
+        with open(WATCHLIST_FILE, "r", encoding="utf-8") as f:
+            return json.load(f)
+    return []
+
+def save_watchlist(watchlist):
+    with open(WATCHLIST_FILE, "w", encoding="utf-8") as f:
+        json.dump(watchlist, f, indent=4)
+
+@router.get("/watchlist")
+def get_watchlist():
+    return load_watchlist()
+
+@router.post("/watchlist/add")
+def add_to_watchlist(symbol: str):
+    watchlist = load_watchlist()
+    if symbol not in watchlist:
+        watchlist.append(symbol)
+        save_watchlist(watchlist)
+    return {"message": f"Đã thêm {symbol} vào danh sách theo dõi."}
+
+@router.delete("/watchlist/remove")
+def remove_from_watchlist(symbol: str):
+    watchlist = load_watchlist()
+    if symbol in watchlist:
+        watchlist.remove(symbol)
+        save_watchlist(watchlist)
+    return {"message": f"Đã xóa {symbol} khỏi danh sách theo dõi."}
+    
 
 @router.get("/stocks/{symbol}", response_model=StockInfoResponse)
 def get_stock(symbol: str, db: Session = Depends(get_db)):
