@@ -11,7 +11,7 @@ COPY flower/requirements.txt /app/requirements.txt
 RUN pip install --no-cache-dir -r /app/requirements.txt
 
 # Sao chép toàn bộ thư mục backend vào container
-COPY backend /app/backend
+COPY ./backend /app/backend
 
 # Đặt thư mục backend vào PYTHONPATH
 ENV PYTHONPATH=/app/backend
