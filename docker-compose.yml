@@ -71,6 +71,7 @@ services:
 
   frontend:
     build: ./frontend
+    command: ["sh", "-c", "chmod +x /app/scripts/setup.sh && /app/scripts/setup.sh && npm run dev"]
     ports:
       - "3000:3000"
     depends_on:
